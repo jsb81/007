@@ -1,0 +1,84 @@
+<div class="content-view-full class-{$node.class_identifier} row">
+	<div class="content-main">
+
+		<h1>{$node.name|wash()}</h1>
+
+		{if $node|has_attribute( 'short_description' )}
+			<div class="abstract">
+				{attribute_view_gui attribute=$node|attribute( 'short_description' )}
+			</div>
+		{/if}
+
+		{if or( $node|has_attribute( 'target' ),
+		$node|has_attribute( 'partners' )
+		)}
+
+			<div class="well small">
+				<div class="row">
+					{if $node|has_attribute( 'target' )}
+						<div class="col-xs-6">
+							<h3><i class="fa fa-bullseye"></i> {$node.data_map.target.contentclass_attribute_name}</h3>
+							{attribute_view_gui attribute=$node|attribute( 'target' ) show_link=true() show_newline=true()}
+						</div>
+					{/if}
+					{if $node|has_attribute( 'partners' )}
+						<div class="col-xs-6">
+							<h3><i class="fa fa-users"></i> {$node.data_map.partners.contentclass_attribute_name}</h3>
+							{attribute_view_gui attribute=$node|attribute( 'partners' ) show_link=true() show_newline=true()}
+						</div>
+					{/if}
+				</div>
+			</div>
+		{/if}
+
+
+		{if $node|has_attribute( 'immagini' )}
+			{def $images = array()}
+			{foreach $node.data_map.immagini.content.relation_list as $relation_item}
+				{set $images = $images|append(fetch('content','node',hash('node_id',$relation_item.node_id)))}
+			{/foreach}
+			{if $images}
+				{include uri='design:atoms/image.tpl' item=$images[0] image_class=appini( 'ContentViewFull', 'DefaultImageClass', 'wide' ) caption=$images[0]|attribute( 'caption' ) css_classes='image-main'}
+
+				{if $images|count()|gt(1)}
+					{include uri='design:atoms/gallery.tpl' items=$images}
+				{/if}
+			{/if}
+		{/if}
+
+		{if $node|has_attribute( 'description' )}
+			<div class="description">
+				{attribute_view_gui attribute=$node|attribute( 'description' )}
+			</div>
+		{/if}
+
+
+		{if or($node|has_attribute( 'partners' ),
+					 $node|has_attribute( 'dati' ))
+		}
+
+			{def $tab_attributes = array( $node|attribute( 'dati' ))}
+
+			{include uri='design:parts/tabs-attributes.tpl' attributes=$tab_attributes view="pills"}
+
+		{/if}
+
+
+	</div>
+	<div class="content-related">
+
+		{include uri='design:parts/content-related/contatti.tpl'}
+
+		{include uri='design:parts/content-related/ambito.tpl'}
+
+		{include uri='design:parts/content-related/comunicati.tpl' attr_name="comunicato/sistema"}
+
+
+		<hr />
+
+		{include uri='design:parts/content-related.tpl'}
+
+
+	</div>
+
+</div>
