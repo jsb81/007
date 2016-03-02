@@ -52,7 +52,7 @@
 						{include uri='design:atoms/social_bar.tpl'}
 						<div class="text-right  small">
 								<br /><br />
-								<i class="fa fa-lock"></i> <a href="http://www.internos.infotn.it/">Area Riservata Dipendenti</a>
+								<i class="fa fa-lock"></i> <a href="https://secure.infotn.it/portal/sso/ITSSOLogin.aspx?sessionITLoginType=clearandredirect&sessionITCurrentPage=https://secure.infotn.it">Area Riservata Dipendenti</a>
 						</div>
 					</div>
 				</div>
